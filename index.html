@@ -3,14 +3,52 @@
 <head>
 	<meta charset="UTF-8">
 	<title>ISF Talk</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<style type="text/css">
+
+		.header {
+			display: block;
+			padding-top: 20px;
+			padding-left: 10px;
+			padding-bottom: 10px;
+		}
+
+		.btn {
+			display: block;
+			color: white;
+			/*height: 30px;*/
+			background: #4CAF50;
+			border-radius: 4px;
+			/*border: 2px solid #00ff00;*/
+			border: none;
+			font-size: 16px;
+			padding: 14px 20px;
+			/*margin-left: 10px;*/
+		}
+
+		h1, h2 {
+			margin: 0px;
+		}
 		
 		.question {
 			display: block;
-			background: #eeeeee;
-			padding: 20px;
+			border-radius: 4px;
+			/*background: #eeeeee;*/
+			border: 1px solid #ccc;
+			padding: 14px 20px;
 			margin: 10px;
 			cursor: pointer;
+		}
+
+		.question-info, .answer-info {
+			color: #888;
+			font-size: 14px;
+		}
+
+		.question-info p, .answer-info p{
+			display: inline-block;
+			padding-right: 10px;
+			margin: 4px 0px 0px 0px;
 		}
 
 		.modal {
@@ -30,7 +68,7 @@
 		.modal-content {
 		    background-color: #fefefe;
 		    margin: 5% auto; /* 15% from the top and centered */
-		    padding: 20px;
+		    padding: 30px;
 		    border: 1px solid #888;
 		    width: 80%; /* Could be more or less, depending on screen size */
 		}
@@ -50,10 +88,38 @@
 		    cursor: pointer;
 		}
 
+		/*Modal Answers*/
+
+		.modal-answers{
+			margin-top: 20px;
+			border-top: 1px dashed #ccc;
+			padding-top: 20px;
+		}
+
+		.modal-teacher-answers {
+			margin: 0px;
+			font-style: italic;
+			margin-bottom: 10px;
+		}
+
+		.btn-inline {
+			display: block;
+			width: 100%;
+			text-align: center;
+			cursor: pointer;
+			margin: 8px 0px 0px 0px;
+			color: #888;
+			font-style: italic;
+		}
+
+		#expanded-answers {
+			display: none;
+		}
+
 		/*Form Modal Stylings*/
 
-		.modual-question-title {
-			margin: 8px 0;
+		form {
+			padding-top: 8px;
 		}
 
 		input[type=text], select {
@@ -69,10 +135,11 @@
 
 		input[type=submit] {
 		    width: 100%;
+		    font-size: 16px;
 		    background-color: #4CAF50;
 		    color: white;
 		    padding: 14px 20px;
-		    margin: 8px 0;
+		    margin: 8px 0px 0px 0px;
 		    border: none;
 		    border-radius: 4px;
 		    cursor: pointer;
@@ -104,14 +171,32 @@
 
 <div class="main">
 	<div class="question qt-easy" id="q1">
-		<h1 class="question-title">
+		<h2 class="question-title">
 			I have issue with my relationship.
-		</h1>
+		</h2>
+		<div class="question-info">
+			<p>2017 July 14</p>
+			<i class="fa fa-eye" aria-hidden="true"></i>
+			<p>156</p>
+			<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+			<p>3</p>
+			<i class="fa fa-commenting" aria-hidden="true"></i>
+			<p>14</p>
+		</div>
 	</div>
 	<div class="question qt-easy" id="q2">
-		<h1 class="question-title">
+		<h2 class="question-title">
 			Please help with my HW.
-		</h1>
+		</h2>
+		<div class="question-info">
+			<p>2017 July 13</p>
+			<i class="fa fa-eye" aria-hidden="true"></i>
+			<p>208</p>
+			<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+			<p>4</p>
+			<i class="fa fa-commenting" aria-hidden="true"></i>
+			<p>28</p>
+		</div>
 	</div>
 </div>
 
@@ -119,8 +204,65 @@
 	<div class="modal-content">
 		<span class="close">&times;</span>
 		<h1 class="modal-main-title">I have issue with my relationship.</h1>
-		<p class="modal-main-detail">I am not sure if she likes me or not. Please help. Blah Blah Blah. (500 words are omitted) </p>
+		<div class="question-info">
+			<p>2017 July 14</p>
+			<i class="fa fa-eye" aria-hidden="true"></i>
+			<p>156</p>
+			<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+			<p>3</p>
+			<i class="fa fa-commenting" aria-hidden="true"></i>
+			<p>14</p>
+		</div>
+		<p class="modal-main-detail">I am not sure if she likes me or not. Please help. Blah Blah Blah. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum quam repudiandae dolorum ut quae quis odio quidem soluta ipsam repellat, alias facere corrupti, autem. Maiores ipsa aliquid, a aspernatur deleniti. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo delectus corporis minima optio facilis excepturi dolorum suscipit sed placeat laudantium! Odit minus voluptas laborum illum maxime voluptatem eaque dignissimos repellat!</p>
+
+		<div class="modal-answers">
+			<p class="modal-teacher-answers">Popular Answer</p>
+			<h2 class="modal-answer-title">Relationship is complicated</h2>
+			<div class="answer-info">
+				<p>2017 July 14</p>
+				<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+				<p>156</p>
+				<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+				<p>1</p>
+			</div>
+			<p class="modal-answer-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus excepturi illo omnis accusantium reprehenderit, fugit odit, obcaecati sint aut aliquid ipsa soluta numquam fugiat nobis, voluptatem ratione explicabo dolorem voluptas!</p>
+
+			<p class="btn-inline" id="expand-answers">See More</p>
+
+			<div id="expanded-answers">
+
+				<h2 class="modal-answer-title">Don't worry</h2>
+				<div class="answer-info">
+					<p>2017 July 13</p>
+					<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+					<p>91</p>
+					<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+					<p>3</p>
+				</div>
+				<p class="modal-answer-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus excepturi illo omnis accusantium reprehenderit, fugit odit, obcaecati sint aut aliquid ipsa soluta numquam fugiat nobis, voluptatem ratione explicabo dolorem voluptas!</p>
+
+				<h2 class="modal-answer-title">Trust me, it is fine!</h2>
+				<div class="answer-info">
+					<p>2017 July 12</p>
+					<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+					<p>80</p>
+					<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+					<p>0</p>
+				</div>
+				<p class="modal-answer-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus excepturi illo omnis accusantium reprehenderit, fugit odit, obcaecati sint aut aliquid ipsa soluta numquam fugiat nobis, voluptatem ratione explicabo dolorem voluptas!</p>
+
+			</div>
+
+		</div>
+
+
+
 	</div>
+
+
+
+
+
 </div>
 
 <div class="modal" id="modal-question">
@@ -150,35 +292,53 @@ window.onload = function () {
 var modalMainClose = document.getElementsByClassName("close")[0];
 var modalQuestionClose = document.getElementsByClassName("close")[1];
 var modalMain = document.getElementById('modal-main');
-var modalQuestion = document.getElementById('modal-question')
+var modalQuestion = document.getElementById('modal-question');
 
+var btnMoreAnswers = document.getElementById("expand-answers");
+var modalMoreAnswers = document.getElementById("expanded-answers");
 
 modalMain.onclick = function(e) {
     if (e.target == modalMain) {
-        modalMain.style.display = "none";
+        closeMainModal();
     }
+}
+
+btnMoreAnswers.onclick = function(e) {
+	modalMoreAnswers.style.display = "block";
+	btnMoreAnswers.style.display = "none";
 }
 
 modalQuestion.onclick = function(e) {
 	if (e.target == modalQuestion) {
-        modalQuestion.style.display = "none";
+        closeMainModal();
     }
 }
 
 modalMainClose.onclick = function() {
-    modalMain.style.display = "none";   
+	closeMainModal(); 
 }
 
-modalQuestionClose.onclick = function() {
+function closeMainModal() {
+	modalMain.style.display = "none";  
 	modalQuestion.style.display = "none";
+	modalMoreAnswers.style.display = "none";
+	btnMoreAnswers.style.display = "block";
+}
+
+function showMainModal() {
+	modalMain.style.display = "block";
 }
 
 function questionsOnClick(e) {
-	modalMain.style.display = "block";
+	showMainModal();
 }
 
 function newQuestion() {
 	modalQuestion.style.display = "block";
+}
+
+modalQuestionClose.onclick = function() {
+	modalQuestion.style.display = "none";
 }
 
 
