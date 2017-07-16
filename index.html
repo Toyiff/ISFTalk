@@ -3,49 +3,153 @@
 <head>
 	<meta charset="UTF-8">
 	<title>ISF Talk</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<style type="text/css">
 
+		:root {
+			--c-green-light: #2ecc71;
+			--c-green-dark: #27ae60;
+			--c-blue-light: #3498db;
+			--c-blue-dark: #2980b9;
+			--c-yellow-light: #f1c40f;
+			--c-yellow-dark: #f39c12;
+			--c-red-light: #e74c3c;
+			--c-red-dark: #c0392b;
+		}
+
+		*:focus {
+			outline:0;
+		}
+
+		* {
+			margin: 0;
+		}
+
+		.welcome {
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: white;
+		}
+	
+		.container-terms {
+			display: block;
+			width: 50%;
+			margin: 5% 25%;
+		}
+
+		.terms {
+			margin: 20px 0px;
+			/*height: 50vh;
+			overflow: scroll;*/
+		}
+
+
 		.header {
 			display: block;
-			padding-top: 20px;
-			padding-left: 10px;
-			padding-bottom: 10px;
+			margin: 10px 20px;
+			line-height: 50px;
+		}
+
+		.heading {
+			padding: 5px;
+			margin-right: 40px;
+			display: inline-block;
+			font-size: 30px;
+			color: var(--c-blue-dark);
+			vertical-align: middle;
+			cursor: default;
 		}
 
 		.btn {
-			display: block;
+			display: inline-block;
 			color: white;
-			/*height: 30px;*/
-			background: #4CAF50;
+			background: var(--c-green-light);
 			border-radius: 4px;
-			/*border: 2px solid #00ff00;*/
 			border: none;
 			font-size: 16px;
 			padding: 14px 20px;
-			/*margin-left: 10px;*/
+			cursor: pointer;
+			vertical-align: middle;
 		}
+		/*
+		.btn:hover {
+			background: var(--c-green-dark);
+		}*/
 
 		h1, h2 {
 			margin: 0px;
 		}
+
+		.container-topics {
+			margin: 20px;
+			display: grid;
+			grid-gap: 10px;
+			grid-template-columns: repeat(6, 1fr);
+		}
 		
-		.question {
+		.topic {
+			/*grid-column: span 6;*/
+			grid-column: span 2;
+			/*width: 45%;*/
 			display: block;
 			border-radius: 4px;
 			/*background: #eeeeee;*/
-			border: 1px solid #ccc;
+			border-style: solid;
+			border-width: 1px;
+			border-left-width: 20px;
 			padding: 14px 20px;
-			margin: 10px;
+			margin: 0px;
 			cursor: pointer;
+			transition: all 0.2s;
+		}
+		
+		/* For tablets: */
+		/*@media only screen and (min-width: 600px) {
+		    
+		    .topic {
+				grid-column: span 3;
+			}
+		}*/
+		
+		/* For desktop: */
+		/*@media only screen and (min-width: 768px) {
+			
+			.topic {
+				grid-column: span 2;
+			}
+		}*/
+
+		/*.topic:hover {
+			border-left-width: 25px;
+		}*/
+
+		.t-topic {
+			border-color: var(--c-blue-light);
 		}
 
-		.question-info, .answer-info {
+		.t-discussion {
+			border-color: var(--c-green-light);
+		}
+
+		.t-question {
+			border-color: var(--c-yellow-light);
+		}
+
+		.topic-title {
+			font-size: 20px;
+		}
+
+		.topic-info, .answer-info {
 			color: #888;
 			font-size: 14px;
 		}
 
-		.question-info p, .answer-info p{
+		.topic-info p, .answer-info p{
 			display: inline-block;
 			padding-right: 10px;
 			margin: 4px 0px 0px 0px;
@@ -66,7 +170,8 @@
 
 		/* Modal Content/Box */
 		.modal-content {
-		    background-color: #fefefe;
+			border-radius: 8px;
+		    background-color: #ffffff;
 		    margin: 5% auto; /* 15% from the top and centered */
 		    padding: 30px;
 		    border: 1px solid #888;
@@ -96,10 +201,14 @@
 			padding-top: 20px;
 		}
 
+		.modal-answer-title {
+			margin-top: 20px;
+		}
+
 		.modal-teacher-answers {
 			margin: 0px;
 			font-style: italic;
-			margin-bottom: 10px;
+			margin-bottom: -15px;
 		}
 
 		.btn-inline {
@@ -136,7 +245,7 @@
 		input[type=submit] {
 		    width: 100%;
 		    font-size: 16px;
-		    background-color: #4CAF50;
+		    background-color: var(--c-green-light);
 		    color: white;
 		    padding: 14px 20px;
 		    margin: 8px 0px 0px 0px;
@@ -145,9 +254,15 @@
 		    cursor: pointer;
 		}
 
-		input[type=submit]:hover {
-		    background-color: #45a049;
+		input[type=submit][disabled] {
+		    background-color: #bbb;
+		    color: #eee;
+		    cursor: default;
 		}
+
+		/*input[type=submit]:hover {
+		    background-color: var(--c-green-dark);
+		}*/
 
 		textarea {
 		    width: 100%;
@@ -165,36 +280,73 @@
 </head>
 <body>
 
-<div class="header">
-	<button id="newQuestion" class="btn" onclick="newQuestion()">New Question</button>
+<div class="welcome">
+	<div class="container-terms">
+		<h2>Terms and Conditions</h2>
+		<p class="terms">
+			This is designed to help students, please *DO NOT* abuse the system Lorem ipsum dolor sit amet, quando patrioque has ad, nam hinc rebum assum ea. Ei feugait delicata vulputate est. Omnes partem his ei, eum purto illud te. Eripuit persequeris contentiones et duo, eum ut unum wisi euripidis. Laudem veritus neglegentur ea vis, enim tempor appareat vis te. Hendrerit efficiantur mea et.
+			<br><br>
+			Id dolores legendos qui. Duo nusquam expetenda interpretaris ei, id cetero accumsan vim. Eu stet reprehe.
+			<br><br>
+			Et aperiri detracto vel. Pri te animal pericula reformidans. Liber aperiri dissentietm epicuri at. Mei ex audiam noluisse delicata. Rebum reprimique in sit, ea usu commodo persius argumentum.
+			<br><br>
+			Ea dolorem epicuri qui, id quot tincidunt nam, nam no perpetua repudiare referrentur. Ludus 
+		</p>
+		<form action="#" onsubmit="termsSubmit()">
+		  <input type="checkbox" id="termsCheck"> 
+		  <label for="termsCheck">I have read and agree with the terms and conditions stated above.</label>
+		  <input type="submit" id="termsContinue" value="Continue" disabled="true">
+		</form>
+	</div>
 </div>
 
-<div class="main">
-	<div class="question qt-easy" id="q1">
-		<h2 class="question-title">
-			I have issue with my relationship.
+<div class="header">
+	<h1 class="heading">
+		<i class="fa fa-heart" aria-hidden="true"></i>
+		ISF Student Helpline
+	</h1>
+	<button id="newtopic" class="btn" onclick="newtopic()">New topic</button>	
+	
+</div>
+
+<div class="container-topics">
+	<div class="topic t-topic" id="t1">
+		<h2 class="topic-title">
+			How to deal with friendship.
 		</h2>
-		<div class="question-info">
+		<div class="topic-info">
 			<p>2017 July 14</p>
-			<i class="fa fa-eye" aria-hidden="true"></i>
+			<i class="fa fa-heart-o" aria-hidden="true"></i>
 			<p>156</p>
 			<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 			<p>3</p>
-			<i class="fa fa-commenting" aria-hidden="true"></i>
+			<i class="fa fa-commenting-o" aria-hidden="true"></i>
 			<p>14</p>
 		</div>
-	</div>
-	<div class="question qt-easy" id="q2">
-		<h2 class="question-title">
-			Please help with my HW.
+	</div><div class="topic t-discussion" id="t2">
+		<h2 class="topic-title">
+			Eating Disorders Discussion.
 		</h2>
-		<div class="question-info">
+		<div class="topic-info">
 			<p>2017 July 13</p>
-			<i class="fa fa-eye" aria-hidden="true"></i>
+			<i class="fa fa-heart-o" aria-hidden="true"></i>
 			<p>208</p>
 			<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 			<p>4</p>
-			<i class="fa fa-commenting" aria-hidden="true"></i>
+			<i class="fa fa-commenting-o" aria-hidden="true"></i>
+			<p>28</p>
+		</div>
+	</div><div class="topic t-question" id="t3">
+		<h2 class="topic-title">
+			How do you deal with relationship?
+		</h2>
+		<div class="topic-info">
+			<p>2017 July 13</p>
+			<i class="fa fa-heart-o" aria-hidden="true"></i>
+			<p>208</p>
+			<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+			<p>4</p>
+			<i class="fa fa-commenting-o" aria-hidden="true"></i>
 			<p>28</p>
 		</div>
 	</div>
@@ -204,13 +356,13 @@
 	<div class="modal-content">
 		<span class="close">&times;</span>
 		<h1 class="modal-main-title">I have issue with my relationship.</h1>
-		<div class="question-info">
+		<div class="topic-info">
 			<p>2017 July 14</p>
-			<i class="fa fa-eye" aria-hidden="true"></i>
+			<i class="fa fa-heart-o" aria-hidden="true"></i>
 			<p>156</p>
 			<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 			<p>3</p>
-			<i class="fa fa-commenting" aria-hidden="true"></i>
+			<i class="fa fa-commenting-o" aria-hidden="true"></i>
 			<p>14</p>
 		</div>
 		<p class="modal-main-detail">I am not sure if she likes me or not. Please help. Blah Blah Blah. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum quam repudiandae dolorum ut quae quis odio quidem soluta ipsam repellat, alias facere corrupti, autem. Maiores ipsa aliquid, a aspernatur deleniti. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo delectus corporis minima optio facilis excepturi dolorum suscipit sed placeat laudantium! Odit minus voluptas laborum illum maxime voluptatem eaque dignissimos repellat!</p>
@@ -250,52 +402,53 @@
 					<p>0</p>
 				</div>
 				<p class="modal-answer-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus excepturi illo omnis accusantium reprehenderit, fugit odit, obcaecati sint aut aliquid ipsa soluta numquam fugiat nobis, voluptatem ratione explicabo dolorem voluptas!</p>
-
 			</div>
-
 		</div>
-
-
-
 	</div>
-
-
-
-
-
 </div>
 
-<div class="modal" id="modal-question">
+<div class="modal" id="modal-topic">
 	<div class="modal-content">
 		<span class="close">&times;</span>
-		<h1 class="modual-question-title">New Question</h1>
-		<form action="">
+		<h1 class="modual-topic-title">New topic</h1>
+		<form action="#">
 			<label for="title">Title:</label> <input type="text" id="title" name="title"><br>
 			<label for="detail">Detail:</label> <textarea id="detail" name="comment" rows="5" cols="40"></textarea><br>
-			<input type="submit" value="Submit">
+			<input type="submit" value="Submit" disabled="true">
 		</form>
 	</div>
 </div>
+
+
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
 
 <script>
 
 window.onload = function () {
 
-	var questions = document.getElementsByClassName('question');
+	var topics = document.getElementsByClassName('topic');
 
-	for (var i = 0; i < questions.length; i++) {
-		var q = questions[i];
-		q.onclick = questionsOnClick;
+	for (var i = 0; i < topics.length; i++) {
+		var q = topics[i];
+		q.onclick = topicsOnClick;
 	}
 }
 
 var modalMainClose = document.getElementsByClassName("close")[0];
-var modalQuestionClose = document.getElementsByClassName("close")[1];
+var modaltopicClose = document.getElementsByClassName("close")[1];
 var modalMain = document.getElementById('modal-main');
-var modalQuestion = document.getElementById('modal-question');
+var modaltopic = document.getElementById('modal-topic');
 
 var btnMoreAnswers = document.getElementById("expand-answers");
 var modalMoreAnswers = document.getElementById("expanded-answers");
+
+var welcome = document.getElementsByClassName('welcome')[0];
+var termsCheck = document.getElementById('termsCheck');
+var termsContinue = document.getElementById('termsContinue');
 
 modalMain.onclick = function(e) {
     if (e.target == modalMain) {
@@ -303,13 +456,21 @@ modalMain.onclick = function(e) {
     }
 }
 
+termsCheck.onclick = function(e) {
+	if (termsCheck.checked) {
+		termsContinue.disabled = false;
+	}else {
+		termsContinue.disabled = true;
+	}
+}
+
 btnMoreAnswers.onclick = function(e) {
 	modalMoreAnswers.style.display = "block";
 	btnMoreAnswers.style.display = "none";
 }
 
-modalQuestion.onclick = function(e) {
-	if (e.target == modalQuestion) {
+modaltopic.onclick = function(e) {
+	if (e.target == modaltopic) {
         closeMainModal();
     }
 }
@@ -320,7 +481,7 @@ modalMainClose.onclick = function() {
 
 function closeMainModal() {
 	modalMain.style.display = "none";  
-	modalQuestion.style.display = "none";
+	modaltopic.style.display = "none";
 	modalMoreAnswers.style.display = "none";
 	btnMoreAnswers.style.display = "block";
 }
@@ -329,16 +490,21 @@ function showMainModal() {
 	modalMain.style.display = "block";
 }
 
-function questionsOnClick(e) {
+function topicsOnClick(e) {
 	showMainModal();
 }
 
-function newQuestion() {
-	modalQuestion.style.display = "block";
+function newtopic() {
+	modaltopic.style.display = "block";
 }
 
-modalQuestionClose.onclick = function() {
-	modalQuestion.style.display = "none";
+modaltopicClose.onclick = function() {
+	modaltopic.style.display = "none";
+}
+
+function termsSubmit() {
+	welcome.style.display = "none";
+	return false;
 }
 
 
